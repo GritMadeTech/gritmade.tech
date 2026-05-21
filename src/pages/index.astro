@@ -1,0 +1,94 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Newsletter from "../components/Newsletter.astro";
+
+const projects = await getCollection("projects");
+const posts = await getCollection("blog");
+
+type LatestItem = {
+  kind: "project" | "post";
+  title: string;
+  description: string;
+  date: Date;
+  href: string;
+};
+
+const latest: LatestItem[] = [
+  ...projects.map((p) => ({
+    kind: "project" as const,
+    title: p.data.title,
+    description: p.data.description,
+    date: p.data.date,
+    href: p.data.link ?? p.data.repo ?? "/projects",
+  })),
+  ...posts.map((p) => ({
+    kind: "post" as const,
+    title: p.data.title,
+    description: p.data.description,
+    date: p.data.date,
+    href: `/blog/${p.id}/`,
+  })),
+]
+  .sort((a, b) => b.date.getTime() - a.date.getTime())
+  .slice(0, 3);
+---
+
+<BaseLayout title="gritmade">
+  <section>
+    <h1 class="font-mono text-2xl text-stone-100 sm:text-3xl">
+      Enterprise AI engineer.
+    </h1>
+    <p class="mt-3 text-stone-400 sm:text-lg">
+      Building apps, systems, and experiments in public.
+    </p>
+  </section>
+
+  <section class="mt-16">
+    <div class="mb-6 flex items-baseline justify-between">
+      <h2 class="font-mono text-sm uppercase tracking-wider text-stone-500">
+        Latest
+      </h2>
+    </div>
+    <ul class="flex flex-col gap-3">
+      {
+        latest.map((item) => {
+          const iso = item.date.toISOString().slice(0, 10);
+          const isExternal = item.href.startsWith("http");
+          return (
+            <li>
+              <a
+                href={item.href}
+                target={isExternal ? "_blank" : undefined}
+                rel={isExternal ? "noopener" : undefined}
+                class="group block border border-stone-900 p-5 transition-colors hover:border-stone-700"
+              >
+                <div class="flex items-baseline justify-between gap-4">
+                  <div class="flex items-baseline gap-3">
+                    <span class="font-mono text-[0.65rem] uppercase tracking-wider text-stone-600">
+                      {item.kind}
+                    </span>
+                    <h3 class="font-mono text-stone-100 transition-colors group-hover:text-amber-600">
+                      {item.title}
+                    </h3>
+                  </div>
+                  <time
+                    datetime={iso}
+                    class="shrink-0 font-mono text-xs text-stone-600"
+                  >
+                    {iso}
+                  </time>
+                </div>
+                <p class="mt-2 text-sm text-stone-400">{item.description}</p>
+              </a>
+            </li>
+          );
+        })
+      }
+    </ul>
+  </section>
+
+  <section class="mt-16">
+    <Newsletter />
+  </section>
+</BaseLayout>

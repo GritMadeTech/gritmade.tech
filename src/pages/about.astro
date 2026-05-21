@@ -1,0 +1,88 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const stack = [
+  "AWS Bedrock",
+  "RAG pipelines",
+  "LiteLLM",
+  "OpenSearch",
+  "AI agents",
+  "MCP architecture",
+];
+
+const socials = [
+  { href: "https://x.com/gritmade", label: "X" },
+  { href: "https://github.com/gritmade", label: "GitHub" },
+  { href: "https://linkedin.com/in/gritmade", label: "LinkedIn" },
+];
+---
+
+<BaseLayout
+  title="About"
+  description="About gritmade and the engineer behind it."
+>
+  <header>
+    <h1 class="font-mono text-2xl text-stone-100 sm:text-3xl">About</h1>
+  </header>
+
+  <section class="mt-10 space-y-4 text-stone-300">
+    <p>
+      I'm an enterprise AI and platform engineer. Day to day I build production
+      AI systems — the kind with real users, real budgets, and real
+      consequences when they break.
+    </p>
+    <p>
+      My work centers on things like AWS Bedrock, RAG pipelines, LiteLLM,
+      OpenSearch, AI agents, and MCP architecture. The stuff that makes
+      large-language-model applications actually work outside a demo.
+    </p>
+  </section>
+
+  <section class="mt-12">
+    <h2 class="font-mono text-sm uppercase tracking-wider text-stone-500">
+      Stack
+    </h2>
+    <ul class="mt-4 flex flex-wrap gap-2 font-mono text-xs">
+      {
+        stack.map((item) => (
+          <li class="border border-stone-800 px-2 py-1 text-stone-300">
+            {item}
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <section class="mt-12">
+    <h2 class="font-mono text-sm uppercase tracking-wider text-stone-500">
+      What gritmade is
+    </h2>
+    <p class="mt-4 text-stone-300">
+      A home base for the apps, experiments, architecture write-ups, and
+      build-in-public work that doesn't fit inside an enterprise roadmap.
+      Built through persistence — hence the name.
+    </p>
+  </section>
+
+  <section class="mt-12">
+    <h2 class="font-mono text-sm uppercase tracking-wider text-stone-500">
+      Elsewhere
+    </h2>
+    <ul class="mt-4 flex flex-col gap-2 font-mono text-sm">
+      {
+        socials.map((s) => (
+          <li>
+            <a
+              href={s.href}
+              target="_blank"
+              rel="me noopener"
+              class="text-stone-300 transition-colors hover:text-amber-600"
+            >
+              {s.label} →
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+</BaseLayout>

@@ -1,0 +1,21 @@
+---
+interface Props {
+  status: "live" | "building" | "experiment";
+}
+const { status } = Astro.props;
+
+const styles: Record<Props["status"], string> = {
+  live: "border-amber-700 text-amber-600",
+  building: "border-stone-600 text-stone-300",
+  experiment: "border-stone-700 text-stone-500",
+};
+---
+
+<span
+  class:list={[
+    "border px-2 py-0.5 font-mono text-[0.65rem] uppercase tracking-wider",
+    styles[status],
+  ]}
+>
+  {status}
+</span>

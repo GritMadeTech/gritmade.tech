@@ -1,0 +1,36 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import ProjectCard from "../../components/ProjectCard.astro";
+
+const projects = (await getCollection("projects")).sort(
+  (a, b) => b.data.date.getTime() - a.data.date.getTime(),
+);
+---
+
+<BaseLayout
+  title="Projects"
+  description="Apps, tools, and experiments built in public."
+>
+  <header>
+    <h1 class="font-mono text-2xl text-stone-100 sm:text-3xl">Projects</h1>
+    <p class="mt-3 text-stone-400">
+      Things I'm building. Some are live, some are in progress, some are
+      experiments that may or may not become more.
+    </p>
+  </header>
+
+  <div class="mt-12 grid gap-4 sm:grid-cols-2">
+    {
+      projects.map((p) => (
+        <ProjectCard
+          title={p.data.title}
+          description={p.data.description}
+          status={p.data.status}
+          link={p.data.link}
+          repo={p.data.repo}
+        />
+      ))
+    }
+  </div>
+</BaseLayout>

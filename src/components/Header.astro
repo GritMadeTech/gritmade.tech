@@ -1,0 +1,43 @@
+---
+const nav = [
+  { href: "/projects", label: "projects" },
+  { href: "/blog", label: "blog" },
+  { href: "/about", label: "about" },
+];
+
+const pathname = Astro.url.pathname.replace(/\/$/, "") || "/";
+---
+
+<header class="border-b border-stone-900">
+  <div
+    class="mx-auto flex max-w-3xl items-center justify-between px-6 py-5"
+  >
+    <a
+      href="/"
+      class="font-mono text-sm text-stone-100 transition-colors hover:text-amber-600"
+    >
+      gritmade<span class="text-amber-600">.</span>tech
+    </a>
+    <nav class="flex gap-5 font-mono text-sm sm:gap-7">
+      {
+        nav.map((item) => {
+          const active =
+            pathname === item.href || pathname.startsWith(item.href + "/");
+          return (
+            <a
+              href={item.href}
+              class:list={[
+                "transition-colors",
+                active
+                  ? "text-amber-600"
+                  : "text-stone-400 hover:text-stone-100",
+              ]}
+            >
+              {item.label}
+            </a>
+          );
+        })
+      }
+    </nav>
+  </div>
+</header>

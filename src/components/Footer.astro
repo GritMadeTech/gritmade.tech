@@ -1,0 +1,32 @@
+---
+const socials = [
+  { href: "https://x.com/gritmadetech", label: "X" },
+  { href: "https://github.com/gritmadetech", label: "GitHub" },
+  { href: "https://linkedin.com/in/danmccrady", label: "LinkedIn" },
+];
+const year = new Date().getFullYear();
+---
+
+<footer class="border-t border-stone-900">
+  <div
+    class="mx-auto flex max-w-3xl flex-col gap-4 px-6 py-8 font-mono text-xs text-stone-500 sm:flex-row sm:items-center sm:justify-between"
+  >
+    <span>&copy; {year} gritmade</span>
+    <ul class="flex gap-6">
+      {
+        socials.map((s) => (
+          <li>
+            <a
+              href={s.href}
+              class="transition-colors hover:text-amber-600"
+              rel="me noopener"
+              target="_blank"
+            >
+              {s.label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</footer>

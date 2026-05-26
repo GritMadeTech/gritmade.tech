@@ -17,6 +17,10 @@ export default {
       return new Response("Email is required", { status: 400 });
     }
 
+    // The page the signup came from (e.g. https://gritmade.tech/blog/...),
+    // falling back to the site root if the browser didn't send a referrer.
+    const referrer = request.headers.get("Referer") || SITE;
+
     const res = await fetch(
       `https://api.beehiiv.com/v2/publications/${env.BEEHIIV_PUBLICATION_ID}/subscriptions`,
       {
@@ -29,8 +33,9 @@ export default {
           email,
           reactivate_existing: true,
           send_welcome_email: true,
-          utm_source: "website",
-          referring_site: SITE,
+          utm_source: "gritmade.tech",
+          utm_medium: "newsletter_form",
+          referring_site: referrer,
         }),
       },
     );

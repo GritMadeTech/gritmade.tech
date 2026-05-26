@@ -1,6 +1,9 @@
 ---
-// TODO: wire to a real newsletter provider (Buttondown, ConvertKit, etc.).
-// Until then, the form POSTs to /api/subscribe which will 404 on the static deploy.
+// Beehiiv signup. The form POSTs to a Cloudflare Worker (see /worker) that
+// holds the API key, forwards to Beehiiv, then redirects to /thanks. No
+// third-party JS runs on the page. After deploying the Worker, paste its URL
+// below (https://gritmade-subscribe.<your-subdomain>.workers.dev).
+const SUBSCRIBE_ENDPOINT = "https://gritmade-subscribe.iapcsolutions.workers.dev";
 ---
 
 <section class="border border-stone-900 p-6 sm:p-8">
@@ -9,7 +12,7 @@
     New apps, experiments, and architecture notes — delivered when they ship.
   </p>
   <form
-    action="/api/subscribe"
+    action={SUBSCRIBE_ENDPOINT}
     method="POST"
     class="mt-5 flex flex-col gap-3 sm:flex-row"
   >

@@ -23,3 +23,6 @@ pnpm-debug.log*
 
 # astro
 .astro/
+
+# cloudflare worker
+worker/.wrangler/

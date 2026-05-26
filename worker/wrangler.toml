@@ -1,0 +1,9 @@
+name = "gritmade-subscribe"
+main = "src/index.js"
+compatibility_date = "2024-11-01"
+
+# Publication ID is not secret (it appears in Beehiiv embed URLs). Replace the
+# placeholder with yours. The API key is a SECRET — set it with:
+#   npx wrangler secret put BEEHIIV_API_KEY
+[vars]
+BEEHIIV_PUBLICATION_ID = "pub_87e91f38-7a7e-4b56-ac68-2e5780b92d48"
